@@ -4,7 +4,7 @@
 
 The approved website crawler stores page chunks in PostgreSQL. Production retrieval uses `pgvector` cosine similarity with an OpenAI-compatible embeddings endpoint; PostgreSQL full-text search remains the fallback when embedding configuration is unavailable.
 
-Configure `AI_EMBEDDING_BASE_URL`, `AI_EMBEDDING_API_KEY`, `AI_EMBEDDING_MODEL`, and `AI_EMBEDDING_DIMENSIONS` separately from the chat provider. Groq is used for chat in the default setup, while embeddings should use a provider that supports `POST /embeddings` and returns 1,536-dimensional vectors for `text-embedding-3-small`. Run `pnpm run db:migrate` before `pnpm run knowledge:ingest` so the `vector` extension and embedding column exist.
+Configure `AI_EMBEDDING_BASE_URL`, `AI_EMBEDDING_API_KEY`, `AI_EMBEDDING_MODEL`, and `AI_EMBEDDING_DIMENSIONS` separately from the chat provider. Groq is used for chat in the default setup, while embeddings should use a provider that supports `POST /embeddings` and returns 1,536-dimensional vectors for `gemini-embedding-001`. Run `pnpm run db:migrate` before `pnpm run knowledge:ingest` so the `vector` extension and embedding column exist.
 
 Support Command is a portable AI support, sales-assistance, knowledge-grounded, visitor-intelligence, and human-escalation application. It runs as one Node.js/Express process with a React/Vite client, PostgreSQL persistence, application-owned signed HTTP-only sessions, and Socket.IO live events.
 
