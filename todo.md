@@ -1,0 +1,43 @@
+# Project TODO
+
+- [x] Confirm the initial product scope, customer access model, and delivery approach before implementation.
+- [x] Define the conversation, message, escalation-rule, and agent-assignment data model.
+- [x] Create the database migrations for persistent support conversations and transcripts.
+- [x] Implement secure server procedures for creating conversations, posting messages, viewing history, and updating statuses.
+- [x] Implement AI replies that retain full conversation context and follow a configurable high-persistence resolution strategy.
+- [x] Implement configurable escalation on failed AI attempts, explicit customer requests, complex topics, and sensitive topics.
+- [x] Implement customer-facing chat access from every application route with status indicators and transcript continuity.
+- [x] Implement agent workspace queue, conversation pickup, context-rich reply flow, and resolution controls.
+- [x] Implement near-real-time message refresh for customer and agent views without manual refresh.
+- [x] Trigger agent notifications when an escalated conversation is awaiting pickup.
+- [x] Implement admin controls for agent accounts, global conversation review, and escalation thresholds.
+- [x] Apply the premium, refined visual system consistently to customer, agent, and admin experiences.
+- [x] Write and run unit tests for persistence, escalation decisions, access control, and conversation-state transitions.
+- [x] Verify key browser workflows, confirm all checklist items, and create a final project checkpoint.
+- [x] Reconcile the expanded customer-support scope with the approved knowledge, sales-assistance, and visitor-intelligence requirements.
+- [x] Define consent-aware anonymous and authenticated visitor identity handling, including secure session-to-account association.
+- [x] Implement approved website-content ingestion, document indexing, and administrator-controlled knowledge refresh.
+- [x] Enforce strict source-grounded AI answers and graceful verified-information fallbacks when knowledge is unavailable.
+- [x] Classify conversational intent, lead signals, complexity, sensitivity, and prompt-injection or manipulation attempts without treating normal disagreement as hostile.
+- [x] Implement privacy-respecting visitor presence, activity timeline, navigation events, and approximate-location data handling.
+- [x] Surface real-time in-app alerts for visitor arrivals, meaningful navigation, high-intent signals, escalations, assignments, messages, and resolution events.
+- [x] Build authorized visitor monitoring, individual journey views, and activity context visibility for agents and administrators.
+- [x] Write and run tests for knowledge boundaries, visitor isolation, consent-aware tracking, intent classification, and injection-resistant response handling.
+- [x] Replace required platform-specific runtime dependencies with portable, configuration-driven application services.
+- [x] Migrate the production data design to PostgreSQL with version-controlled, runnable migrations.
+- [x] Implement application-owned authentication and server-enforced visitor, customer, agent, and administrator authorization.
+- [x] Create a provider-neutral AI adapter configured through environment variables, independent of support logic and escalation rules.
+- [x] Create portable abstractions for knowledge retrieval and event delivery, with the IP-geolocation adapter next in the visitor-intelligence workflow.
+- [x] Supply a complete environment-variable template, self-hosting README, production build and start commands, deployment documentation, and architecture documentation.
+- [x] Supply a production-ready Docker configuration for self-hosted deployment, if supported by the selected stack.
+- [x] Audit the final source for required platform-specific imports, URLs, environment variables, and runtime dependencies; document any development-only remnants.
+- [x] Perform and document a portability test showing that migrations, authentication, AI configuration, knowledge ingestion, live events, and support operations can run outside the development environment.
+- [x] Implement authenticated-customer access to permitted associated conversations independent of only the anonymous browser-session cookie.
+- [x] Add authorization tests for visitor-to-customer association, customer-only conversation access, and cross-customer isolation.
+- [x] Add persisted visitor-tracking consent controls and gate visitor activity, presence, and approximate location behind consent.
+- [x] Add explicit visitor-arrival and escalation-created notification records and verify the agent notification feed.
+- [x] Mount the customer chat widget in the shared customer shell so it remains available on every customer-facing route.
+- [x] Verify and test the protected administrator visitor-detail endpoint and individual journey rendering.
+- [x] Add test coverage for knowledge-boundary fallback, persisted transcript behavior, and conversation-state transitions.
+- [x] Add database-backed tests that persist and retrieve conversation transcripts.
+- [x] Add service or API tests that exercise the real AI-handling, pending-agent, agent-active, and resolved workflow transitions.

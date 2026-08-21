@@ -1,0 +1,23 @@
+# Copy these values into the secret manager or environment configuration of your chosen host.
+NODE_ENV=development
+PORT=3000
+APP_ORIGIN=http://localhost:3000
+COOKIE_SECRET=replace-with-a-random-32-byte-secret
+SESSION_SECRET=replace-with-a-different-random-32-byte-secret
+DATABASE_URL=postgresql://support_app:replace-me@localhost:5432/support_platform
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=replace-with-a-strong-initial-password
+AI_PROVIDER=openai-compatible
+AI_BASE_URL=https://api.openai.com/v1
+AI_API_KEY=replace-with-provider-key
+AI_MODEL=gpt-4.1-mini
+AI_EMBEDDING_MODEL=text-embedding-3-small
+APPROVED_SOURCE_URL=
+MAX_KNOWLEDGE_PAGES=25
+GEOLOCATION_PROVIDER=disabled
+GEOLOCATION_API_URL=
+GEOLOCATION_API_KEY=
+VISITOR_ACTIVITY_RETENTION_DAYS=30
+SECURE_COOKIES=false
+TRUST_PROXY=false
+ADMIN_DISPLAY_NAME=Administrator

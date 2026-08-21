@@ -1,0 +1,2 @@
+ALTER TABLE visitor_sessions ADD COLUMN IF NOT EXISTS tracking_consent BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE visitor_sessions ADD COLUMN IF NOT EXISTS tracking_consent_at TIMESTAMPTZ;

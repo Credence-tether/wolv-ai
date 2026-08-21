@@ -1,0 +1,298 @@
+# CRITICAL: DO NOT LOCK THIS PROJECT TO MANUS CLOUD
+
+This project must be **fully portable and self-hostable**.
+
+Manus Cloud may be used as a development/build environment if necessary, but the application itself MUST NOT depend on Manus Cloud to function.
+
+The final application must be capable of being moved to another server, VPS, Docker environment, Vercel, another cloud provider, or a local development machine without requiring Manus services.
+
+## 1. NO MANUS RUNTIME DEPENDENCY
+
+Do NOT hardcode or architect the application around:
+
+* Manus Cloud APIs
+* Manus-specific backend services
+* Manus-specific database services
+* Manus-specific authentication
+* Manus-specific storage
+* Manus-specific realtime services
+* Manus-specific server URLs
+* Manus-specific internal APIs
+* Manus proprietary SDKs unless they are completely optional and replaceable
+* Manus-only environment variables
+* Manus-only filesystem paths
+* Manus-only deployment assumptions
+
+If Manus provides a convenience service, do not silently make it a required dependency.
+
+Before using any Manus-specific service, ask whether the same functionality can be implemented using standard, portable technologies. Prefer the portable solution.
+
+## 2. USE STANDARD ARCHITECTURE
+
+Build the application using standard technologies and open protocols.
+
+Every major infrastructure dependency must be replaceable through configuration.
+
+Examples:
+
+* Database → PostgreSQL
+* Authentication → standard application authentication using portable libraries
+* File storage → S3-compatible storage abstraction
+* Realtime → WebSocket/SSE or a portable realtime provider
+* AI → provider abstraction using environment variables
+* Email → provider abstraction
+* Geolocation → standard IP geolocation API abstraction
+* Background jobs → portable server-side job mechanism
+* Configuration → environment variables
+* Secrets → environment variables/secrets manager, never source code
+
+Do not build core business logic directly into a proprietary Manus service.
+
+## 3. ENVIRONMENT VARIABLES
+
+All environment-specific configuration must come from environment variables.
+
+Never hardcode:
+
+* Database URLs
+* API keys
+* AI API keys
+* JWT secrets
+* Encryption keys
+* Storage credentials
+* Realtime credentials
+* External service URLs
+* Application URLs
+* Admin URLs
+* Private tokens
+
+Provide a `.env.example` containing every required variable with placeholder values.
+
+The application must clearly separate:
+
+* development
+* staging
+* production
+
+No production secrets may be committed to the repository.
+
+## 4. DATABASE PORTABILITY
+
+The database must not be tied to a Manus-managed database.
+
+Use PostgreSQL with a standard schema and migrations.
+
+All database structure must exist in version-controlled migrations.
+
+I must be able to create the database elsewhere and run the migrations without Manus.
+
+Provide clear commands for:
+
+```bash
+npm install
+npm run db:migrate
+npm run build
+npm run start
+```
+
+or the equivalent commands for the actual stack.
+
+Do not rely on an undocumented Manus database state.
+
+## 5. AI PROVIDER PORTABILITY
+
+Do not hardwire the AI implementation so that only a Manus AI model can operate it.
+
+Create an AI provider abstraction.
+
+The application should be able to switch providers through environment configuration.
+
+For example:
+
+```env
+AI_PROVIDER=openai
+AI_MODEL=...
+AI_API_KEY=...
+```
+
+The exact provider implementation can vary, but the business logic, conversation memory, knowledge retrieval, intent detection, escalation logic and visitor intelligence must remain independent of the AI provider.
+
+## 6. KNOWLEDGE SYSTEM PORTABILITY
+
+The website knowledge system must not depend on Manus storage.
+
+Website content, embeddings, documents and metadata must be stored in a portable database/storage architecture.
+
+The knowledge ingestion/indexing process must be reproducible outside Manus.
+
+I must be able to:
+
+1. Deploy the application somewhere else.
+2. Configure the database.
+3. Configure the AI provider.
+4. Run the knowledge ingestion process.
+5. Re-index the website.
+6. Run the application normally.
+
+## 7. REALTIME PORTABILITY
+
+The realtime visitor system must not depend on a hidden Manus realtime service.
+
+Presence, navigation, chat, notifications and escalation events must use a documented and replaceable architecture.
+
+If a third-party realtime service is used, isolate it behind an application abstraction so it can later be replaced.
+
+Do not scatter provider-specific realtime calls throughout the application.
+
+Use a central event architecture.
+
+## 8. VISITOR TRACKING
+
+The visitor tracking system must communicate with our own application backend/API.
+
+Do not send visitor information directly to an internal Manus-only endpoint.
+
+The browser should communicate with the application's own API.
+
+The backend should control:
+
+* session creation
+* visitor identity
+* heartbeat
+* navigation events
+* activity events
+* chat
+* notifications
+* escalation
+* authorization
+
+## 9. AUTHENTICATION AND AUTHORIZATION
+
+Authentication and authorization must belong to the application architecture.
+
+Do not assume that a user is authenticated simply because they are authenticated to Manus.
+
+The deployed application must independently know:
+
+* visitor
+* customer
+* agent
+* administrator
+
+Role permissions must be enforced server-side.
+
+Never rely solely on frontend checks.
+
+## 10. FILESYSTEM
+
+Do not assume Manus Cloud filesystem paths exist.
+
+Do not use hardcoded paths such as:
+
+```text
+/manus/...
+/workspace/...
+/cloud/...
+```
+
+unless they are purely temporary development paths and are completely isolated from production logic.
+
+Application data must use configured storage/database services.
+
+## 11. DEPLOYMENT
+
+The project must be deployable outside Manus.
+
+The repository must contain everything required to deploy the application elsewhere.
+
+Provide:
+
+* `README.md`
+* `.env.example`
+* database migrations
+* seed/setup instructions where appropriate
+* build commands
+* production start commands
+* deployment instructions
+* required environment variables
+* architecture documentation
+
+If Docker is appropriate for the stack, provide a production-ready `Dockerfile` and appropriate Docker configuration.
+
+The application should be capable of running with:
+
+```bash
+npm install
+npm run build
+npm run start
+```
+
+or the equivalent commands for the chosen framework.
+
+## 12. NO HIDDEN MANUS DEPENDENCIES
+
+Before considering the implementation complete, audit the entire codebase for:
+
+* Manus imports
+* Manus SDKs
+* Manus API calls
+* Manus URLs
+* Manus environment variables
+* Manus database references
+* Manus storage references
+* Manus authentication references
+* Manus realtime references
+* Manus-specific filesystem paths
+* undocumented cloud services
+
+Report every one found.
+
+For every Manus-specific dependency, either:
+
+1. Remove it,
+2. Replace it with a portable implementation, or
+3. Isolate it behind a replaceable adapter and clearly document it.
+
+The default should be removal.
+
+## 13. PORTABILITY TEST
+
+Before declaring the project complete, perform a portability test.
+
+Pretend Manus Cloud no longer exists.
+
+The application should still be architecturally capable of running elsewhere.
+
+Verify that:
+
+* Database can be recreated from migrations.
+* Application can build outside Manus.
+* Application can start outside Manus.
+* Authentication works independently.
+* AI works using configured provider credentials.
+* Knowledge ingestion works independently.
+* Visitor tracking works independently.
+* Realtime functionality works independently.
+* Chat works independently.
+* Agent workspace works independently.
+* Notifications work independently.
+* Escalation works independently.
+* No critical functionality requires Manus Cloud.
+
+## 14. IMPORTANT RULE
+
+DO NOT optimize the architecture for "making it work inside Manus."
+
+Optimize it for:
+
+**"making it work anywhere."**
+
+Manus should be treated as an optional development environment, not as the foundation of the product.
+
+If a design decision would make the application easier to build in Manus but harder to deploy elsewhere, choose the portable architecture instead.
+
+Do not quietly introduce proprietary Manus dependencies for convenience.
+
+If you believe a Manus-specific service is necessary, STOP and clearly identify the dependency and its replacement strategy before implementing it.
+
+The finished source code must belong to the project architecture, not to Manus Cloud.
