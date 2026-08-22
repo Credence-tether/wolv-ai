@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { LockKeyhole, LogIn } from "lucide-react";
 import { AdminConsole } from "./AdminConsole";
 import { AgentWorkspace } from "./AgentWorkspace";
+import { CustomerChat } from "./CustomerChat";
 import { CustomerHome } from "./CustomerHome";
 import { CustomerLayout } from "./CustomerLayout";
 import { api } from "@/lib/api";
@@ -39,8 +40,8 @@ function App() {
   useEffect(() => {
     void api<{ user: CurrentUser | null }>("/api/auth/me").then(result => { if (result.user) { setUser(result.user); setMode("staff"); } }).catch(() => undefined);
   }, []);
-
-  if (mode === "staff" && !user) return <StaffLogin onAuthenticated={next => { setUser(next); }} onBack={() => setMode("customer")} />;
+  const isWidgetRoute = window.location.pathname === "/widget" || window.location.pathname.startsWith("/widget/");
+  if (isWidgetRoute) return <CustomerChat />;  if (mode === "staff" && !user) return <StaffLogin onAuthenticated={next => { setUser(next); }} onBack={() => setMode("customer")} />;
   if (mode === "admin" && user?.role === "admin") return <AdminConsole onBack={() => setMode("staff")} />;
   if (mode === "staff" && user) return <AgentWorkspace user={user} onAdmin={() => setMode("admin")} />;
   return <CustomerLayout><CustomerHome onStaff={() => setMode("staff")} /></CustomerLayout>;
